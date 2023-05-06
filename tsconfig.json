@@ -1,0 +1,11 @@
+{
+    "include": ["index.ts", "tests.ts", "cli/index.ts"],
+    "compilerOptions": {
+        "lib": ["esnext", "dom"],
+        "target": "esnext",
+        "moduleResolution": "node",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+    }
+}

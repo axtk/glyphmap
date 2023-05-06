@@ -17,7 +17,7 @@ export function transform(input: string, config: Config = {}) {
     if (map.length !== 0) {
         let {ignore = []} = config;
 
-        let normalize = s => s && !config.strictCase ? s.toLowerCase() : s;
+        let normalize = (s: string | undefined) => s && !config.strictCase ? s.toLowerCase() : s;
         let ignoredGlyphs = ignore.map(normalize);
 
         for (let i = 0; i < inputGlyphs.length; i++) {
@@ -41,7 +41,7 @@ export function transform(input: string, config: Config = {}) {
                 if (inputGlyphIndex === -1)
                     continue;
 
-                let relevantInputGlyphs: [string, number][] = [];
+                let relevantInputGlyphs: [string | undefined, number][] = [];
 
                 // look behind
                 let j = i;
@@ -78,7 +78,7 @@ export function transform(input: string, config: Config = {}) {
                         break;
                     }
 
-                    let includesGlyph = sourceItem.value.includes(glyph);
+                    let includesGlyph = glyph !== undefined && sourceItem.value.includes(glyph);
 
                     matches &&= sourceItem?.op === 'NOT' ? !includesGlyph : includesGlyph;
                 };

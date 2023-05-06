@@ -1,7 +1,7 @@
 import {GlyphData} from './GlyphData';
 
 export type NormalizedTransformMapEntry = {
-    origin: string;
+    key: string;
     from: GlyphData[];
     to: GlyphData[];
 };

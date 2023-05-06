@@ -39,8 +39,8 @@ export function getNormalizedMapEntry(
     config: Config,
 ): NormalizedTransformMapEntry {
     return {
-        origin: entry.origin,
-        from: toGlyphData(entry.from ?? entry.origin, config),
+        key: entry.key,
+        from: toGlyphData(entry.from ?? entry.key, config),
         to: toGlyphData(entry.to, config),
     };
 }

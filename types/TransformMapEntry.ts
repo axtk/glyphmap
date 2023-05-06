@@ -1,11 +1,11 @@
 type SingleValueTransformMapEntry = {
-    origin: string;
+    key: string;
     from?: string;
     to: string;
 };
 
 type MultipleValueTransformMapEntry = {
-    origin: string;
+    key: string;
     from: (string | string[])[];
     to: (string | string[])[];
 };

@@ -29,9 +29,9 @@ export function transform(input: string, config: Config = {}) {
             isLowerCase[i] = inputGlyphs[i].toLowerCase() === inputGlyphs[i];
 
             for (let k = 0; k < map.length; k++) {
-                let {origin, from: source, to: target} = map[k];
+                let {key, from: source, to: target} = map[k];
 
-                if (inputGlyph !== origin || transformed[i])
+                if (inputGlyph !== key || transformed[i])
                     continue;
 
                 let inputGlyphIndex = source.findIndex(item => {

@@ -25,3 +25,12 @@ npx glyphmap -i <input_path> -c <config_location> [-o <output_path>]
 ```
 
 `<config_location>` is either a file path or a URL.
+
+#### *Example*
+
+```
+npx glyphmap "привет" -c https://raw.githubusercontent.com/axtk/translit/master/configs/ru.json
+> privet
+```
+
+Note that this package doesn't bring along specific rulesets. The URL in the example above is an external ruleset.

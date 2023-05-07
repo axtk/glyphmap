@@ -1,6 +1,7 @@
 # glyphmap
 
-Converts texts based on custom transliteration rulesets.
+- Converts texts based on custom transliteration rulesets;
+- Supports conditional conversion based on the environment of a character.
 
 ## Usage
 

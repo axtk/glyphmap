@@ -28,11 +28,8 @@
   "author": "axtk",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.1.0",
+    "@types/node": ">10",
     "esbuild": "^0.17.18",
     "npm-run-all": "^4.1.5"
-  },
-  "dependencies": {
-    "node-fetch": "^3.3.1"
   }
 }

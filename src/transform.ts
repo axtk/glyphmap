@@ -78,9 +78,13 @@ export function transform(input: string, config: Config = {}) {
                         break;
                     }
 
-                    let includesGlyph = glyph !== undefined && sourceItem.value.includes(glyph);
+                    let {value, op} = sourceItem;
+                    let includesGlyph = glyph !== undefined && value.includes(glyph);
 
-                    matches &&= sourceItem?.op === 'NOT' ? !includesGlyph : includesGlyph;
+                    matches &&= (
+                        (op === 'NOT' ? !includesGlyph : includesGlyph) &&
+                        (op !== 'OTHER' || inputGlyph !== glyph)
+                    );
                 };
 
                 if (!matches)

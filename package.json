@@ -9,11 +9,11 @@
   "scripts": {
     "build": "npm-run-all -s dist:clean dist:build dist:cli",
     "dist:build": "esbuild index.ts --bundle --outfile=dist/index.js",
-    "dist:cli": "esbuild cli/index.ts --bundle --outfile=dist/cli.js --platform=node --external:fs",
+    "dist:cli": "esbuild cli/index.ts --bundle --outfile=dist/cli.js --platform=node",
     "dist:clean": "node -e \"require('fs').rmSync('dist', {force: true, recursive: true});\"",
     "prepublishOnly": "npm run build",
     "test": "npm-run-all -s build test:build test:run",
-    "test:build": "esbuild test.ts --bundle --outfile=dist/test.js",
+    "test:build": "esbuild test.ts --bundle --outfile=dist/test.js --platform=node",
     "test:run": "node dist/test.js"
   },
   "repository": {

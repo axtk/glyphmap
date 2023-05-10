@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {readFileSync, writeFileSync} from 'node:fs';
-import {fetchJSON} from '../lib/fetchJSON';
+import {fetchContent} from '../lib/fetchContent';
 import type {Config} from '../types/Config';
 import {transform} from '../src/transform';
 
@@ -38,7 +38,7 @@ async function getConfig() {
         return;
 
     if (/^https?:\/\//.test(config))
-        return (await fetchJSON(config)) as Config;
+        return (await fetchContent(config, 'json')) as Config;
 
     return JSON.parse(readFileSync(config).toString()) as Config;
 }

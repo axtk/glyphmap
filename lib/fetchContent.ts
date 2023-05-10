@@ -1,7 +1,7 @@
 import {get as httpGet, STATUS_CODES} from 'node:http';
 import {get as httpsGet} from 'node:https';
 
-export function fetchJSON(url: string) {
+export function fetchContent(url: string, type?: 'text' | 'json') {
     return new Promise((resolve, reject) => {
         (url.startsWith('https:') ? httpsGet : httpGet)(url, res => {
             let {statusCode} = res, error;
@@ -25,13 +25,16 @@ export function fetchJSON(url: string) {
             });
 
             res.on('end', () => {
-                try {
-                    let parsedData = JSON.parse(rawData);
-                    resolve(parsedData);
+                if (type === 'json') {
+                    try {
+                        let parsedData = JSON.parse(rawData);
+                        resolve(parsedData);
+                    }
+                    catch (error) {
+                        reject(error);
+                    }
                 }
-                catch (error) {
-                    reject(error);
-                }
+                else resolve(rawData);
             });
         })
         .on('error', error => {

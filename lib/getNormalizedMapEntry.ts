@@ -40,7 +40,7 @@ export function getNormalizedMapEntry(
 ): NormalizedTransformMapEntry {
     return {
         key: entry.key,
-        from: toGlyphData(entry.from ?? entry.key, config),
+        from: toGlyphData('from' in entry ? entry.from : entry.key, config),
         to: toGlyphData(entry.to, config),
     };
 }

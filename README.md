@@ -43,6 +43,7 @@ The following examples show parts of JSON configs with comments added here for s
 {
   "map": [
     {
+      // Matches "и" to "i"
       "key": "и",
       "to": "i",
     },
@@ -50,9 +51,7 @@ The following examples show parts of JSON configs with comments added here for s
       "key": "я",
       "to": "ja",
     }
-  ],
-  // Disregard acute accents used as stress marks.
-  "ignore": ["\u0301"]
+  ]
 }
 ```
 
@@ -86,7 +85,11 @@ The following examples show parts of JSON configs with comments added here for s
       "from": ["#consonant", "я"],
       "to": ["~", "ia"]
     }
-  ]
+  ],
+  // Disregards the listed characters when the environment of the input
+  // characters is figured out. (In this example, it's the acute accent
+  // used as a stress mark.)
+  "ignore": ["\u0301"]
 }
 ```
 
@@ -108,8 +111,7 @@ The following examples show parts of JSON configs with comments added here for s
     },
     {
       "key": "и",
-      // `OTHER` excludes the current character of the transformed input
-      // from the following group.
+      // `OTHER` excludes the current `key` from the following group.
       "from": ["OTHER #vowel", "и"],
       "to": ["~", "í"]
     }

@@ -43,7 +43,7 @@ The following examples show parts of JSON configs with comments added here for s
 {
   "map": [
     {
-      // Matches "и" to "i"
+      // Maps "и" to "i"
       "key": "и",
       "to": "i",
     },

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import {readFileSync, writeFileSync} from 'node:fs';
 import {fetchContent} from '../lib/fetchContent';
-import type {Config} from '../types/Config';
 import {transform} from '../src/transform';
+import type {Config} from '../types/Config';
 
 type Options = {
     config?: string;
@@ -15,7 +15,7 @@ const args = process.argv.slice(2);
 const options: Options = {};
 
 for (let i = 0; i < args.length; i++) {
-    if (i === 0 && (args[i][0] !== '-' || args[i].length > 2))
+    if (i === 0 && (!args[i].startsWith('-') || args[i].length > 2))
         options.text = args[i];
 
     switch (args[i]) {
@@ -67,6 +67,7 @@ function showHelp() {
     if (!input) {
         console.error('Error: No input.');
         showHelp();
+
         return;
     }
 
@@ -75,6 +76,7 @@ function showHelp() {
     if (!config) {
         console.error('Error: No config.');
         showHelp();
+
         return;
     }
 

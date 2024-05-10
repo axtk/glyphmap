@@ -10,7 +10,7 @@ export function transform(input: string, config: Config = {}) {
 
     let isLowerCase = new Array<boolean>(inputGlyphs.length).fill(true);
     let isSingleGlyph = new Array<boolean>(inputGlyphs.length).fill(true);
-    let transformed = new Array(inputGlyphs.length).fill(false);
+    let transformed = new Array<boolean>(inputGlyphs.length).fill(false);
 
     let map = getNormalizedMap(config);
 
@@ -28,9 +28,7 @@ export function transform(input: string, config: Config = {}) {
 
             isLowerCase[i] = inputGlyphs[i].toLowerCase() === inputGlyphs[i];
 
-            for (let k = 0; k < map.length; k++) {
-                let {key, from: source, to: target} = map[k];
-
+            for (let {key, from: source, to: target} of map) {
                 if (inputGlyph !== key || transformed[i])
                     continue;
 
@@ -45,6 +43,7 @@ export function transform(input: string, config: Config = {}) {
 
                 // look behind
                 let j = i;
+
                 while (relevantInputGlyphs.length < inputGlyphIndex + 1) {
                     let glyph = normalize(inputGlyphs[j]);
 
@@ -58,6 +57,7 @@ export function transform(input: string, config: Config = {}) {
 
                 // look ahead
                 j = i + 1;
+
                 while (relevantInputGlyphs.length < source.length) {
                     let glyph = normalize(inputGlyphs[j]);
 
@@ -81,11 +81,10 @@ export function transform(input: string, config: Config = {}) {
                     let {value, op} = sourceItem;
                     let includesGlyph = glyph !== undefined && value.includes(glyph);
 
-                    matches &&= (
+                    matches &&=
                         (op === 'NOT' ? !includesGlyph : includesGlyph) &&
-                        (op !== 'OTHER' || inputGlyph !== glyph)
-                    );
-                };
+                        (op !== 'OTHER' || inputGlyph !== glyph);
+                }
 
                 if (!matches)
                     continue;
@@ -96,7 +95,8 @@ export function transform(input: string, config: Config = {}) {
 
                     if (targetValue !== undefined && targetValue !== '~') {
                         outputGlyphs[glyphIndex] = targetValue;
-                        isSingleGlyph[glyphIndex] = targetValue.length === 1 || target[n].op === 'GLYPH';
+                        isSingleGlyph[glyphIndex] = targetValue.length === 1 ||
+                            target[n].op === 'GLYPH';
                         transformed[glyphIndex] = true;
                     }
                 }
@@ -109,9 +109,9 @@ export function transform(input: string, config: Config = {}) {
 
             if (
                 isSingleGlyph[i] ||
-                (isLowerCase[i - 1] === false && isLowerCase[i + 1] === false) ||
-                (isLowerCase[i - 2] === false && isLowerCase[i - 1] === false) ||
-                (isLowerCase[i + 1] === false && isLowerCase[i + 2] === false)
+                (!isLowerCase[i - 1] && !isLowerCase[i + 1]) ||
+                (!isLowerCase[i - 2] && !isLowerCase[i - 1]) ||
+                (!isLowerCase[i + 1] && !isLowerCase[i + 2])
             )
                 outputGlyphs[i] = outputGlyphs[i].toUpperCase();
             else

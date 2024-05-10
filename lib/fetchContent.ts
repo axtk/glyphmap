@@ -28,6 +28,7 @@ export function fetchContent(url: string, type?: 'text' | 'json') {
                 if (type === 'json') {
                     try {
                         let parsedData = JSON.parse(rawData);
+
                         resolve(parsedData);
                     }
                     catch (error) {
@@ -37,8 +38,8 @@ export function fetchContent(url: string, type?: 'text' | 'json') {
                 else resolve(rawData);
             });
         })
-        .on('error', error => {
-            reject(error);
-        });
+            .on('error', error => {
+                reject(error);
+            });
     });
 }

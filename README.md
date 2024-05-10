@@ -9,7 +9,7 @@
 
 Installation: `npm i glyphmap`
 
-```ts
+```js
 import {transform} from 'glyphmap';
 
 let {output} = transform('<text>', config);

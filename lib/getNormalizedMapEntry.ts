@@ -1,9 +1,9 @@
 import type {Config} from '../types/Config';
-import type {TransformMapEntry} from '../types/TransformMapEntry';
-import type {NormalizedTransformMapEntry} from '../types/NormalizedTransformMapEntry';
 import type {GlyphData} from '../types/GlyphData';
-import {parseGlyphData} from './parseGlyphData';
+import type {NormalizedTransformMapEntry} from '../types/NormalizedTransformMapEntry';
+import type {TransformMapEntry} from '../types/TransformMapEntry';
 import {isGlyphData} from './isGlyphData';
+import {parseGlyphData} from './parseGlyphData';
 
 function toGlyphData(
     value: string | (string | string[])[] | GlyphData[],

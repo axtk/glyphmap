@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "npm-run-all -s dist:clean dist:build dist:cli",
-    "dist:build": "esbuild index.ts --bundle --outfile=dist/index.js",
+    "dist:build": "esbuild index.ts --bundle --outfile=dist/index.js --platform=neutral",
     "dist:cli": "esbuild cli/index.ts --bundle --outfile=dist/cli.js --platform=node",
     "dist:clean": "node -e \"require('fs').rmSync('dist', {force: true, recursive: true});\"",
     "prepublishOnly": "npm run build",

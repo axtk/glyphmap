@@ -1,6 +1,8 @@
 import {getNormalizedMap} from '../lib/getNormalizedMap';
 import type {Config} from '../types/Config';
 
+const blankSpace = /^\s+$/;
+
 export function transform(input: string, config: Config = {}) {
     if (typeof input !== 'string')
         throw new Error('Input should be a string');
@@ -9,6 +11,7 @@ export function transform(input: string, config: Config = {}) {
     let outputGlyphs = inputGlyphs.slice();
 
     let isLowerCase = new Array<boolean>(inputGlyphs.length).fill(true);
+    let isGlyph = new Array<boolean>(inputGlyphs.length).fill(false);
     let isSingleGlyph = new Array<boolean>(inputGlyphs.length).fill(true);
     let transformed = new Array<boolean>(inputGlyphs.length).fill(false);
 
@@ -27,6 +30,7 @@ export function transform(input: string, config: Config = {}) {
                 continue;
 
             isLowerCase[i] = inputGlyphs[i].toLowerCase() === inputGlyphs[i];
+            isGlyph[i] = !blankSpace.test(inputGlyphs[i]);
 
             for (let {key, from: source, to: target} of map) {
                 if (inputGlyph !== key || transformed[i])
@@ -109,9 +113,9 @@ export function transform(input: string, config: Config = {}) {
 
             if (
                 isSingleGlyph[i] ||
-                (!isLowerCase[i - 1] && !isLowerCase[i + 1]) ||
-                (!isLowerCase[i - 2] && !isLowerCase[i - 1]) ||
-                (!isLowerCase[i + 1] && !isLowerCase[i + 2])
+                (isGlyph[i - 1] && !isLowerCase[i - 1] && isGlyph[i + 1] && !isLowerCase[i + 1]) ||
+                (isGlyph[i - 2] && !isLowerCase[i - 2] && isGlyph[i - 1] && !isLowerCase[i - 1]) ||
+                (isGlyph[i + 1] && !isLowerCase[i + 1] && isGlyph[i + 2] && !isLowerCase[i + 2])
             )
                 outputGlyphs[i] = outputGlyphs[i].toUpperCase();
             else

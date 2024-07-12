@@ -1,6 +1,6 @@
 {
   "name": "glyphmap",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "Custom transliteration converter",
   "main": "dist/index.js",
   "bin": {

@@ -3,7 +3,6 @@
   "version": "0.1.17",
   "description": "Custom transliteration converter",
   "main": "dist/index.js",
-  "type": "module",
   "bin": {
     "glyphmap": "dist/cli.js"
   },

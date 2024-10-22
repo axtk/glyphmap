@@ -11,8 +11,8 @@ type Options = {
     outputFile?: string;
 };
 
-const args = process.argv.slice(2);
-const options: Options = {};
+let args = process.argv.slice(2);
+let options: Options = {};
 
 for (let i = 0; i < args.length; i++) {
     if (i === 0 && (!args[i].startsWith('-') || args[i].length > 2))

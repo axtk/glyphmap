@@ -47,7 +47,7 @@ export type Config = {
      *
      * @see TransformMap
      */
-    map?: TransformMap;
+    map?: TransformMap | TransformMap[];
     /**
      * If set to `true`, the transform map will be handled as an exact
      * case-sensitive map. Otherwise (by default), the transform will

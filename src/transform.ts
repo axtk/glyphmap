@@ -1,4 +1,4 @@
-import {getNormalizedMap} from '../lib/getNormalizedMap';
+import {getNormalizedMaps} from '../lib/getNormalizedMaps';
 import type {Config} from '../types/Config';
 
 export function transform(input: string, config: Config = {}) {
@@ -12,9 +12,9 @@ export function transform(input: string, config: Config = {}) {
     let isSingleGlyph = new Array<boolean>(inputGlyphs.length).fill(false);
     let transformed = new Array<boolean>(inputGlyphs.length).fill(false);
 
-    let map = getNormalizedMap(config);
+    let maps = getNormalizedMaps(config);
 
-    if (map.length !== 0) {
+    for (let map of maps) {
         let {ignore = []} = config;
 
         let normalize = (s: string | undefined) => s && !config.strictCase ? s.toLowerCase() : s;
@@ -106,19 +106,21 @@ export function transform(input: string, config: Config = {}) {
             }
         }
 
-        for (let i = 0; i < outputGlyphs.length; i++) {
-            if (!transformed[i] || !isUpperCase[i] || !outputGlyphs[i])
-                continue;
+        if (map.length !== 0) {
+            for (let i = 0; i < outputGlyphs.length; i++) {
+                if (!transformed[i] || !isUpperCase[i] || !outputGlyphs[i])
+                    continue;
 
-            if (
-                isSingleGlyph[i] ||
-                (isUpperCase[i - 1] && isUpperCase[i + 1]) ||
-                (isUpperCase[i - 2] && isUpperCase[i - 1]) ||
-                (isUpperCase[i + 1] && isUpperCase[i + 2])
-            )
-                outputGlyphs[i] = outputGlyphs[i].toUpperCase();
-            else
-                outputGlyphs[i] = outputGlyphs[i][0].toUpperCase() + outputGlyphs[i].slice(1);
+                if (
+                    isSingleGlyph[i] ||
+                    (isUpperCase[i - 1] && isUpperCase[i + 1]) ||
+                    (isUpperCase[i - 2] && isUpperCase[i - 1]) ||
+                    (isUpperCase[i + 1] && isUpperCase[i + 2])
+                )
+                    outputGlyphs[i] = outputGlyphs[i].toUpperCase();
+                else
+                    outputGlyphs[i] = outputGlyphs[i][0].toUpperCase() + outputGlyphs[i].slice(1);
+            }
         }
     }
 

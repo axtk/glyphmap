@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {readFileSync, writeFileSync} from 'node:fs';
+import {readFile, writeFile} from 'node:fs/promises';
 import {fetchContent} from '../lib/fetchContent';
 import {transform} from '../src/transform';
 import type {Config} from '../types/Config';
@@ -40,17 +40,19 @@ async function getConfig() {
     if (/^https?:\/\//.test(config))
         return (await fetchContent(config, 'json')) as Config;
 
-    return JSON.parse(readFileSync(config).toString()) as Config;
+    let content = (await readFile(config)).toString();
+
+    return JSON.parse(content) as Config;
 }
 
-function getInput() {
+async function getInput() {
     let {text, inputFile} = options;
 
     if (text)
         return text;
 
     if (inputFile)
-        return readFileSync(inputFile).toString();
+        return (await readFile(inputFile)).toString();
 }
 
 function showHelp() {
@@ -62,7 +64,7 @@ function showHelp() {
 }
 
 (async () => {
-    let input = getInput();
+    let input = await getInput();
 
     if (!input) {
         console.error('Error: No input.');
@@ -83,6 +85,6 @@ function showHelp() {
     let result = transform(input, config);
 
     if (options.outputFile)
-        writeFileSync(options.outputFile, result.output);
+        await writeFile(options.outputFile, result.output);
     else console.log(result.output);
 })();

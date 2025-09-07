@@ -7,13 +7,13 @@
     "glyphmap": "dist/cli.js"
   },
   "scripts": {
-    "build": "npm-run-all -s dist:clean dist:build dist:cli",
-    "dist:build": "esbuild index.ts --bundle --outfile=dist/index.js --platform=neutral",
-    "dist:cli": "esbuild cli/index.ts --bundle --outfile=dist/cli.js --platform=node",
-    "dist:clean": "node -e \"require('fs').rmSync('dist', {force: true, recursive: true});\"",
+    "build": "npx npm-run-all dist:clean dist:build dist:cli",
+    "dist:build": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral",
+    "dist:cli": "npx esbuild cli/index.ts --bundle --outdir=dist --platform=node",
+    "dist:clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "prepublishOnly": "npm run build",
-    "test": "npm-run-all -s build test:build test:run",
-    "test:build": "esbuild test.ts --bundle --outfile=dist/test.js --platform=node",
+    "test": "npx npm-run-all build test:build test:run",
+    "test:build": "npx esbuild test.ts --bundle --outdir=dist --platform=node",
     "test:run": "node dist/test.js"
   },
   "repository": {
@@ -28,8 +28,6 @@
   "author": "axtk",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": ">10",
-    "esbuild": "^0.21.1",
-    "npm-run-all": "^4.1.5"
+    "@types/node": ">10"
   }
 }

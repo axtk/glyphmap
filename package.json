@@ -8,13 +8,13 @@
   },
   "scripts": {
     "build": "npx npm-run-all dist:clean dist:build dist:cli",
-    "dist:build": "npx esbuild index.ts --bundle --outdir=dist --platform=neutral",
-    "dist:cli": "npx esbuild cli/index.ts --bundle --outdir=dist --platform=node",
+    "dist:build": "npx esbuild index.ts --bundle --outfile=dist/index.js --platform=neutral",
+    "dist:cli": "npx esbuild cli/index.ts --bundle --outfile=dist/cli.js --platform=node",
     "dist:clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "prepublishOnly": "npm run build",
     "preversion": "npx npm-run-all typecheck build",
     "test": "npx npm-run-all build test:build test:run",
-    "test:build": "npx esbuild test.ts --bundle --outdir=dist --platform=node",
+    "test:build": "npx esbuild test.ts --bundle --outfile=dist/test.js --platform=node",
     "test:run": "node dist/test.js",
     "typecheck": "tsc --noEmit"
   },

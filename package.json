@@ -12,9 +12,11 @@
     "dist:cli": "npx esbuild cli/index.ts --bundle --outdir=dist --platform=node",
     "dist:clean": "node -e \"require('node:fs').rmSync('dist', {force: true, recursive: true});\"",
     "prepublishOnly": "npm run build",
+    "preversion": "npx npm-run-all typecheck build",
     "test": "npx npm-run-all build test:build test:run",
     "test:build": "npx esbuild test.ts --bundle --outdir=dist --platform=node",
-    "test:run": "node dist/test.js"
+    "test:run": "node dist/test.js",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   "author": "axtk",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": ">10"
+    "@types/node": ">10",
+    "typescript": "^5.9.2"
   }
 }
